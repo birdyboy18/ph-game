@@ -20,7 +20,7 @@ export default class extends Phaser.State {
         tileMap.setCollisionBetween(1, 2000, true, 'blockingLayer');
 
         this.character = new Character({
-            game: this,
+            game: this.game,
             x: this.world.centerX,
             y: this.world.centerY,
             asset: 'character'
