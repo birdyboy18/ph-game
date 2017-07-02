@@ -11,6 +11,7 @@ export default class extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.touchingGround = false;
+        this.isFalling = false;
     }
 
     update () {
@@ -28,14 +29,18 @@ export default class extends Phaser.Sprite {
             if ( this.body.velocity.x <= 100) {
                 this.body.velocity.x += this.direction;
             }
-            this.animations.play('run');
+            if (this.touchingGround) {
+                this.animations.play('run');
+            }
             this.scale.x = 1;
         } else if (this.cursors.left.isDown) {
             // this.left += this.direction * -1;
             if (this.body.velocity.x >= -100) {
                 this.body.velocity.x -= this.direction;
             }
-            this.animations.play('run');
+            if (this.touchingGround) {
+                this.animations.play('run');
+            }
             this.scale.x = -1;
         } else {
             this.body.velocity.x = this.body.velocity.x * 0.75;
@@ -50,14 +55,19 @@ export default class extends Phaser.Sprite {
 
         if (this.cursors.up.isDown && this.touchingGround) {
             // this.top += this.direction * -1;
-            if (this.body.velocity.y >= -250) {
-                this.body.velocity.y -= 200;
-            }
+            this.body.velocity.y -= 200;
+            this.animations.play('jump');
+        }
+
+        if (this.body.velocity.y > 0) {
+            this.isFalling = true;
         }
     }
 
     setUpAnimations() {
         this.animations.add('walk', [1,2,3,4], 10, false);
         this.animations.add('run', [14,15,17], 10, false);
+        this.animations.add('jump', [4,5], 10, false);
+        this.animations.add('falling', [5,7], 10, false);
     }
 }
