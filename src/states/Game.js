@@ -10,7 +10,7 @@ export default class extends Phaser.State {
     create () {
         //add physics to the game
         //set global gravity
-        this.game.physics.arcade.gravity.set(0,180);
+        this.game.physics.arcade.gravity.set(0,300);
 
         this.game.tileMap = this.game.add.tilemap('tile_map');
         this.game.tileMap.addTilesetImage('tile_jungle_bottom_brown', 'tile_jungle_bottom');
@@ -19,7 +19,7 @@ export default class extends Phaser.State {
 
         this.game.backgroundLayer = this.game.tileMap.createLayer('backgroundLayer');
         this.game.backgroundLayer.resizeWorld();
-        
+
         this.game.blockingLayer = this.game.tileMap.createLayer('blockingLayer');
         this.game.tileMap.setCollisionBetween(1, 2000, true, 'blockingLayer');
 
