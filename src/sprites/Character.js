@@ -8,7 +8,6 @@ export default class extends Phaser.Sprite {
         this.direction = this.speed;
         this.setUpKeyboard();
         this.setUpAnimations();
-        console.log(this);
     }
 
     update () {

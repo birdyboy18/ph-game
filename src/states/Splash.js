@@ -21,7 +21,10 @@ export default class extends Phaser.State {
         this.load.image('tile_jungle_ground', './assets/tiles/tile_jungle_ground_brown.png');
         this.load.image('tile_jungle_wall', './assets/tiles/tile_jungle_wall_brown.png');
 
-        this.load.spritesheet('character', 'assets/sprites/characters.png', 32, 32)
+        this.load.spritesheet('naked_man', './assets/sprites/naked-man.png', 32, 25)
+        this.load.spritesheet('king', './assets/sprites/king.png', 32, 25)
+        this.load.spritesheet('elf', './assets/sprites/elf.png', 32, 25)
+        this.load.spritesheet('snake', './assets/sprites/snake.png', 32, 16)
 
     }
 
