@@ -17,7 +17,7 @@ export default class extends Phaser.State {
         backgroundLayer.resizeWorld();
 
         let blockingLayer = tileMap.createLayer('blockingLayer');
-        this.map.setCollisionBetween(1, 2000, true, 'blockingLayer');
+        tileMap.setCollisionBetween(1, 2000, true, 'blockingLayer');
 
         this.character = new Character({
             game: this,
