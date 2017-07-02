@@ -3884,15 +3884,14 @@ define(String.prototype, "padRight", "".padEnd);
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
-  gameWidth: 760,
-  gameHeight: 400,
+  gameWidth: 1920,
+  gameHeight: 1440,
   localStorageName: 'phaseres6webpack'
 });
 
 /***/ }),
 /* 121 */
 /* exports provided: default */
-/* exports used: default */
 /*!*********************************!*\
   !*** ./src/sprites/Mushroom.js ***!
   \*********************************/
@@ -3903,14 +3902,26 @@ define(String.prototype, "padRight", "".padEnd);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
 
 
-/* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
+/* unused harmony default export */ var _unused_webpack_default_export = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
   constructor({ game, x, y, asset }) {
     super(game, x, y, asset);
     this.anchor.setTo(0.5);
+    this.direction = 5;
+    this.width = 64;
+    this.height = 64;
   }
 
   update() {
-    this.angle += 1;
+    this.checkEdges();
+  }
+
+  checkEdges() {
+    if (this.left + this.width >= this.game.world.bounds.width) {
+      this.direction = this.direction * -1;
+    } else if (this.left <= 0) {
+      this.direction = this.direction * -1;
+    }
+    this.left += this.direction;
   }
 });
 
@@ -3977,7 +3988,9 @@ define(String.prototype, "padRight", "".padEnd);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sprites_Mushroom__ = __webpack_require__(/*! ../sprites/Mushroom */ 121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sprites_Character__ = __webpack_require__(/*! ../sprites/Character */ 314);
 /* globals __DEV__ */
+
 
 
 
@@ -3986,28 +3999,21 @@ define(String.prototype, "padRight", "".padEnd);
   preload() {}
 
   create() {
-    const bannerText = 'Phaser + ES6 + Webpack';
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText);
-    banner.font = 'Bangers';
-    banner.padding.set(10, 16);
-    banner.fontSize = 40;
-    banner.fill = '#77BFA3';
-    banner.smoothed = false;
-    banner.anchor.setTo(0.5);
 
-    this.mushroom = new __WEBPACK_IMPORTED_MODULE_1__sprites_Mushroom__["a" /* default */]({
+    this.character = new __WEBPACK_IMPORTED_MODULE_2__sprites_Character__["a" /* default */]({
       game: this,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'mushroom'
+      asset: 'character'
     });
 
-    this.game.add.existing(this.mushroom);
+    //this.game.add.existing(this.mushroom)
+    this.game.add.existing(this.character);
   }
 
   render() {
     if (true) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32);
+      //this.game.debug.spriteInfo(this.mushroom, 32, 32)
     }
   }
 });
@@ -4041,6 +4047,7 @@ define(String.prototype, "padRight", "".padEnd);
     // load your assets
     //
     this.load.image('mushroom', 'assets/images/mushroom2.png');
+    this.load.spritesheet('character', 'assets/sprites/characters.png', 32, 32);
   }
 
   create() {
@@ -9829,8 +9836,60 @@ module.exports = __webpack_require__(/*! ./modules/_core */ 24);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */119);
-module.exports = __webpack_require__(/*! /Users/paulbird/Documents/hackdays/pantyhack/src/main.js */118);
+module.exports = __webpack_require__(/*! /Users/paulbird/Documents/experiments/ph-game/src/main.js */118);
 
+
+/***/ }),
+/* 313 */,
+/* 314 */
+/* exports provided: default */
+/* exports used: default */
+/*!**********************************!*\
+  !*** ./src/sprites/Character.js ***!
+  \**********************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(/*! phaser */ 40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (class extends __WEBPACK_IMPORTED_MODULE_0_phaser__["Phaser"].Sprite {
+    constructor({ game, x, y, asset }) {
+        super(game, x, y, asset, 1);
+        this.anchor.setTo(0.5);
+        this.speed = 2;
+        this.direction = this.speed;
+        this.setUpKeyboard();
+    }
+
+    update() {
+        this.handleMove();
+    }
+
+    setUpKeyboard() {
+        this.cursors = game.input.keyboard.createCursorKeys();
+        console.log(game.input.keyboard);
+    }
+
+    handleMove() {
+        if (this.cursors.right.isDown) {
+            this.left += this.direction;
+        }
+
+        if (this.cursors.left.isDown) {
+            this.left += this.direction * -1;
+        }
+
+        if (this.cursors.down.isDown) {
+            this.top += this.direction;
+        }
+
+        if (this.cursors.up.isDown) {
+            this.top += this.direction * -1;
+        }
+    }
+});
 
 /***/ })
 ],[312]);
