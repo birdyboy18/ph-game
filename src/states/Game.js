@@ -12,17 +12,16 @@ export default class extends Phaser.State {
         //set global gravity
         this.game.physics.arcade.gravity.set(0,180);
 
-        this.tileMap = this.game.add.tilemap('tile_map');
-        this.tileMap.addTilesetImage('tile_jungle_bottom_brown', 'tile_jungle_bottom');
-        this.tileMap.addTilesetImage('tile_jungle_ground_brown', 'tile_jungle_ground');
-        this.tileMap.addTilesetImage('tile_jungle_wall_brown', 'tile_jungle_wall');
+        this.game.tileMap = this.game.add.tilemap('tile_map');
+        this.game.tileMap.addTilesetImage('tile_jungle_bottom_brown', 'tile_jungle_bottom');
+        this.game.tileMap.addTilesetImage('tile_jungle_ground_brown', 'tile_jungle_ground');
+        this.game.tileMap.addTilesetImage('tile_jungle_wall_brown', 'tile_jungle_wall');
 
-        this.backgroundLayer = this.tileMap.createLayer('backgroundLayer');
-        this.backgroundLayer.resizeWorld();
-
-        this.blockingLayer = this.tileMap.createLayer('blockingLayer');
-        //this.tileMap.setCollisionBetween(1, 2000, true, 'blockingLayer');
-        console.log(this.blockingLayer);
+        this.game.backgroundLayer = this.game.tileMap.createLayer('backgroundLayer');
+        this.game.backgroundLayer.resizeWorld();
+        
+        this.game.blockingLayer = this.game.tileMap.createLayer('blockingLayer');
+        this.game.tileMap.setCollisionBetween(1, 2000, true, 'blockingLayer');
 
         this.character = new Character({
             game: this.game,

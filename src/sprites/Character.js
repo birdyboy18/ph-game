@@ -10,10 +10,10 @@ export default class extends Phaser.Sprite {
         this.setUpAnimations();
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
-        console.log(this.body);
     }
 
     update () {
+        game.physics.arcade.collide(this, game.blockingLayer);
         this.handleMove();
     }
 
