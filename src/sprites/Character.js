@@ -11,6 +11,7 @@ export default class extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.touchingGround = false;
+        this.breatheTween = game.add.tween(this.scale).to({ y: 0.95 }, 500, Phaser.Easing.Sinusoidal.None, false, 0, 0, true);
     }
 
     update () {
@@ -45,6 +46,7 @@ export default class extends Phaser.Sprite {
             this.body.velocity.x = this.body.velocity.x * 0.75;
             this.animations.stop();
             this.frame = 1;
+            this.breatheTween.start();
         }
 
         if (this.cursors.up.isDown && this.touchingGround) {
