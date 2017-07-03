@@ -37,6 +37,7 @@ export default class extends Phaser.Sprite {
             }
             this.scale.x = 1;
             this.facingDirection = 1;
+            this.angle = -10;
         } else if (this.cursors.left.isDown) {
             // this.left += this.direction * -1;
             if (this.body.velocity.x >= -100) {
@@ -47,11 +48,13 @@ export default class extends Phaser.Sprite {
             }
             this.scale.x = -1;
             this.facingDirection = -1;
+            this.angle = 10;
         } else {
             this.body.velocity.x = this.body.velocity.x * 0.75;
             this.animations.stop();
             this.frame = 1;
             this.breatheTween.start();
+            this.angle = 0;
         }
 
         if (this.cursors.up.isDown && this.touchingGround) {
