@@ -11,7 +11,6 @@ export default class extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.touchingGround = false;
-        this.isFalling = false;
     }
 
     update () {
@@ -48,19 +47,14 @@ export default class extends Phaser.Sprite {
             this.frame = 1;
         }
 
-        // if (this.cursors.down.isDown) {
-        //     //this.top += this.direction;
-        //     this.body.velocity.y += this.direction;
-        // }
-
         if (this.cursors.up.isDown && this.touchingGround) {
             // this.top += this.direction * -1;
             this.body.velocity.y -= 200;
             this.animations.play('jump');
         }
 
-        if (this.body.velocity.y > 0) {
-            this.isFalling = true;
+        if (this.isFalling()) {
+            this.frame = 7;
         }
     }
 
@@ -69,5 +63,13 @@ export default class extends Phaser.Sprite {
         this.animations.add('run', [14,15,17], 10, false);
         this.animations.add('jump', [4,5], 10, false);
         this.animations.add('falling', [5,7], 10, false);
+    }
+
+    isFalling() {
+        if (this.body.velocity.y > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
