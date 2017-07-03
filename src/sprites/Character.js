@@ -11,7 +11,10 @@ export default class extends Phaser.Sprite {
         game.physics.arcade.enable(this);
         this.body.collideWorldBounds = true;
         this.touchingGround = false;
+        this.facingDirection = 0;
         this.breatheTween = game.add.tween(this.scale).to({ y: 0.95 }, 500, Phaser.Easing.Sinusoidal.None, false, 0, 0, true);
+        this.backflip = game.add.tween(this).to({ angle: 360 }, 1200, Phaser.Easing.Bounce.None, false, 0, 0, false);
+        this.frontflip = game.add.tween(this).to({ angle: -360 }, 1200, Phaser.Easing.Bounce.None, false, 0, 0, false);
     }
 
     update () {
@@ -33,6 +36,7 @@ export default class extends Phaser.Sprite {
                 this.animations.play('run');
             }
             this.scale.x = 1;
+            this.facingDirection = 1;
         } else if (this.cursors.left.isDown) {
             // this.left += this.direction * -1;
             if (this.body.velocity.x >= -100) {
@@ -42,6 +46,7 @@ export default class extends Phaser.Sprite {
                 this.animations.play('run');
             }
             this.scale.x = -1;
+            this.facingDirection = -1;
         } else {
             this.body.velocity.x = this.body.velocity.x * 0.75;
             this.animations.stop();
@@ -53,6 +58,11 @@ export default class extends Phaser.Sprite {
             // this.top += this.direction * -1;
             this.body.velocity.y -= 200;
             this.animations.play('jump');
+            if (this.facingDirection === 1) {
+                this.frontflip.start();
+            } else if (this.facingDirection === -1) {
+                this.backflip.start();
+            }
         }
 
         if (this.isFalling()) {
