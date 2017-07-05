@@ -75,7 +75,7 @@ export default class extends Phaser.Sprite {
 
         if (this.touchingGround) {
             this.emitter.x = this.x;
-            this.emitter.y = this.y;
+            this.emitter.y = this.y + this.height/2;
             this.emitter.start(true, 300, null, 10);
         }
     }
