@@ -1,4 +1,4 @@
-import { Phaser, Input } from 'phaser'
+import { Phaser } from 'phaser'
 
 export default class extends Phaser.Sprite {
     constructor ({ game, x, y, asset }) {
@@ -15,6 +15,7 @@ export default class extends Phaser.Sprite {
         this.breatheTween = game.add.tween(this.scale).to({ y: 0.95 }, 500, Phaser.Easing.Sinusoidal.None, false, 0, 0, true);
         this.backflip = game.add.tween(this).to({ angle: 360 }, 1200, Phaser.Easing.Bounce.None, false, 0, 0, false);
         this.frontflip = game.add.tween(this).to({ angle: -360 }, 1200, Phaser.Easing.Bounce.None, false, 0, 0, false);
+        this.createEmitters();
     }
 
     update () {
@@ -71,6 +72,12 @@ export default class extends Phaser.Sprite {
         if (this.isFalling()) {
             this.frame = 7;
         }
+
+        if (this.touchingGround) {
+            this.emitter.x = this.x;
+            this.emitter.y = this.y;
+            this.emitter.start(true, 300, null, 10);
+        }
     }
 
     setUpAnimations() {
@@ -86,5 +93,18 @@ export default class extends Phaser.Sprite {
         } else {
             return false;
         }
+    }
+
+    createEmitters() {
+        let bmd = this.game.add.bitmapData(3,3);
+        this.drawSquare(bmd);
+        this.emitter = this.game.add.emitter(0,this.height/2,10);
+        this.emitter.lifespan = 300;
+        this.emitter.makeParticles(bmd);
+    }
+
+    drawSquare(bmd) {
+        bmd.ctx.fillStyle = 'white';
+        bmd.ctx.fillRect(0,0,5,5);
     }
 }

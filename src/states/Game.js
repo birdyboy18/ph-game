@@ -32,7 +32,7 @@ export default class extends Phaser.State {
 
         //this.game.add.existing(this.mushroom)
         this.game.add.existing(this.character);
-        this.game.physics.arcade.collide(this.character, this.blockingLayer);
+        //this.game.physics.arcade.collide(this.character, this.blockingLayer);
     }
 
     render () {
